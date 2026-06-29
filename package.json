@@ -1,0 +1,26 @@
+{
+  "name": "multi-agent-code-review",
+  "version": "1.0.0",
+  "description": "Multi-Agent Software Development Assistant — Kaggle AI Agents Capstone",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.3",
+    "@google/generative-ai": "^0.24.1",
+    "next": "14.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.3"
+  }
+}
