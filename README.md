@@ -110,7 +110,7 @@ AgentForge/
 1. **Clone the repository:**
    ```bash
    git clone <your-repository-url>
-   cd multi-agent-code-review
+   cd AgentForge
    ```
 
 2. **Install dependencies:**
