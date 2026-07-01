@@ -109,8 +109,8 @@ AgentForge/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Umer-3085/Multi-Agent-Code-Review-System
-   cd AgentForge
+   git clone <your-repository-url>
+   cd multi-agent-code-review
    ```
 
 2. **Install dependencies:**
