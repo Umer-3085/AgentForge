@@ -1,8 +1,8 @@
-# 🚀 Autonomous Multi-Agent Code Review & Synthesis System
+# 🔥 AgentForge — Multi-Agent Code Review & Synthesis System
 
-A production-grade, collaborative software engineering assistant built for the **AI Agents: Intensive Vibe Coding Capstone Project (Agents for Business Track)**. 
+A production-grade, collaborative software engineering assistant built for the **AI Agents: Intensive Vibe Coding Capstone Project (Freestyle Track)**.
 
-This platform deploys a network of five specialized AI agents that review, critique, and co-develop software requirements. It showcases real-time agent coordination, security audits based on OWASP standards, and code refactoring loops before outputting a fully tested and documented result.
+AgentForge deploys a network of five specialized AI agents that review, critique, and co-develop software requirements. It showcases real-time agent coordination, OWASP-based security audits, an automated MCP static analysis tool, and a critique-and-refine loop — outputting a fully tested and documented codebase from a plain-English requirement.
 
 ---
 
@@ -70,14 +70,13 @@ This project applies and strictly implements the core requirements for the Kaggl
 | **MCP Server** | **Implemented in `mcp_server.js` & `lib/mcp.js`.** A compliant Model Context Protocol server communicating over `stdio` via JSON-RPC 2.0. Exposes a `check_code_quality` tool that runs as a child process to perform static analysis. |
 | **Security features** | **Implemented in `SecurityAgent` & `mcp_server.js`.** Code is evaluated against OWASP Top 10. The MCP tool actively scans for `eval()`, hardcoded secrets, and SQL injection patterns. Environment variables are strictly enforced. |
 | **Deployability** | **Implemented in `pages/api/generate.js`.** A Vercel-ready Next.js app. Configured with `"X-Accel-Buffering": "no"` to ensure Server-Sent Events (SSE) stream perfectly through Vercel's edge proxies. |
-| **Agent skills (Agents CLI) & Antigravity** | **Demonstrated in Video.** The YouTube submission explicitly highlights the usage of the Antigravity/Agents CLI during the project build process. |
 
 ---
 
 ## 📁 Project Structure
 
 ```
-multi-agent-code-review/
+AgentForge/
 ├── components/
 │   ├── AgentCard.js       # Agent pipeline display component
 │   ├── CodeBlock.js       # Markdown & syntax-highlighted code container
@@ -104,14 +103,14 @@ multi-agent-code-review/
 
 ### Prerequisites
 - Node.js (v18.x or above)
-- GEMINI API Key
+- GEMINI or Groq API Key
 
 ### Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repository-url>
-   cd multi-agent-code-review
+   git clone https://github.com/Umer-3085/Multi-Agent-Code-Review-System
+   cd AgentForge
    ```
 
 2. **Install dependencies:**
@@ -124,9 +123,9 @@ multi-agent-code-review/
    ```bash
    cp .env.example .env.local
    ```
-   Open `.env.local` and paste your Anthropic API Key:
+   Open `.env.local` and paste your Gemini API Key (get one at [aistudio.google.com](https://aistudio.google.com/app/apikey)):
    ```env
-   GEMINI_API_KEY=your_sk_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
    ```
 
 4. **Launch the development server:**
@@ -138,14 +137,17 @@ multi-agent-code-review/
 ---
 
 ## 🛡️ Security & Compliance
-- **No API Keys in Source Code**: The application strictly reads the Anthropic keys via secure backend environment variables (`process.env.GEMINI_API_KEY`).
-- **Input Sanitization**: Users write requirements that are enclosed dynamically inside strict prompts, ensuring agents do not execute malicious scripts.
+- **No API Keys in Source Code**: The application strictly reads the Gemini API key via secure backend environment variables (`process.env.GEMINI_API_KEY`). Keys are validated for correct format before any LLM call is made.
+- **Input Sanitization**: User requirements are enclosed inside strict, structured prompts, preventing agents from executing malicious or injected instructions.
+- **MCP Static Analysis**: Every generated code block is scanned by the MCP server for `eval()` usage, hardcoded secrets, and SQL injection patterns before LLM-based review begins.
 
 ---
 
 ## 🚀 Vercel Deployment Guide
 
-To host this project online for the judges to run live:
+AgentForge is deployed live at **https://multi-agent-code-review-plum.vercel.app** — judges can test it directly without any local setup.
+
+To self-host:
 
 1. **Deploy via Vercel CLI:**
    ```bash
@@ -153,8 +155,10 @@ To host this project online for the judges to run live:
    vercel
    ```
 2. Follow the prompt questions.
-3. Add the `GEMINI_API_KEY` to the project variables inside the Vercel Settings Panel.
+3. Add `GEMINI_API_KEY` (and optionally `GROQ_API_KEY`) to the project's Environment Variables in the Vercel Settings Panel.
 4. Deploy to production:
    ```bash
    vercel --prod
    ```
+
+> **Note:** The `X-Accel-Buffering: no` header is already configured in `pages/api/generate.js` to ensure SSE streams correctly through Vercel's edge proxies.
