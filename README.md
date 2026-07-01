@@ -1,8 +1,8 @@
-# 🚀 Autonomous Multi-Agent Code Review & Synthesis System
+# 🔥 AgentForge — Multi-Agent Code Review & Synthesis System
 
-A production-grade, collaborative software engineering assistant built for the **AI Agents: Intensive Vibe Coding Capstone Project (Agents for Business Track)**. 
+A production-grade, collaborative software engineering assistant built for the **AI Agents: Intensive Vibe Coding Capstone Project (Freestyle Track)**.
 
-This platform deploys a network of five specialized AI agents that review, critique, and co-develop software requirements. It showcases real-time agent coordination, security audits based on OWASP standards, and code refactoring loops before outputting a fully tested and documented result.
+AgentForge deploys a network of five specialized AI agents that review, critique, and co-develop software requirements. It showcases real-time agent coordination, OWASP-based security audits, an automated MCP static analysis tool, and a critique-and-refine loop — outputting a fully tested and documented codebase from a plain-English requirement.
 
 ---
 
@@ -110,8 +110,8 @@ multi-agent-code-review/
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repository-url>
-   cd multi-agent-code-review
+   git clone https://github.com/Umer-3085/Multi-Agent-Code-Review-System
+   cd Multi-Agent-Code-Review-System
    ```
 
 2. **Install dependencies:**
@@ -124,9 +124,9 @@ multi-agent-code-review/
    ```bash
    cp .env.example .env.local
    ```
-   Open `.env.local` and paste your Anthropic API Key:
+   Open `.env.local` and paste your Gemini API Key (get one at [aistudio.google.com](https://aistudio.google.com/app/apikey)):
    ```env
-   GEMINI_API_KEY=your_sk_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
    ```
 
 4. **Launch the development server:**
@@ -138,14 +138,17 @@ multi-agent-code-review/
 ---
 
 ## 🛡️ Security & Compliance
-- **No API Keys in Source Code**: The application strictly reads the Anthropic keys via secure backend environment variables (`process.env.GEMINI_API_KEY`).
-- **Input Sanitization**: Users write requirements that are enclosed dynamically inside strict prompts, ensuring agents do not execute malicious scripts.
+- **No API Keys in Source Code**: The application strictly reads the Gemini API key via secure backend environment variables (`process.env.GEMINI_API_KEY`). Keys are validated for correct format before any LLM call is made.
+- **Input Sanitization**: User requirements are enclosed inside strict, structured prompts, preventing agents from executing malicious or injected instructions.
+- **MCP Static Analysis**: Every generated code block is scanned by the MCP server for `eval()` usage, hardcoded secrets, and SQL injection patterns before LLM-based review begins.
 
 ---
 
 ## 🚀 Vercel Deployment Guide
 
-To host this project online for the judges to run live:
+AgentForge is deployed live at **https://multi-agent-code-review-plum.vercel.app** — judges can test it directly without any local setup.
+
+To self-host:
 
 1. **Deploy via Vercel CLI:**
    ```bash
@@ -153,8 +156,10 @@ To host this project online for the judges to run live:
    vercel
    ```
 2. Follow the prompt questions.
-3. Add the `GEMINI_API_KEY` to the project variables inside the Vercel Settings Panel.
+3. Add `GEMINI_API_KEY` (and optionally `GROQ_API_KEY`) to the project's Environment Variables in the Vercel Settings Panel.
 4. Deploy to production:
    ```bash
    vercel --prod
    ```
+
+> **Note:** The `X-Accel-Buffering: no` header is already configured in `pages/api/generate.js` to ensure SSE streams correctly through Vercel's edge proxies.
