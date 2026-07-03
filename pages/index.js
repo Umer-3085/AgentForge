@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Head from "next/head";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -53,10 +53,34 @@ const TEMPLATES = [
 function MarkdownOutput({ content, label }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // Fallback for environments where clipboard API is restricted
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = content;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+
+        if (ok) {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2200);
+        } else {
+          setCopied(false);
+        }
+      } catch {
+        setCopied(false);
+      }
+    }
   };
 
   return (
@@ -153,7 +177,7 @@ export default function Home() {
     refinedCode: "", tests: "", docs: "",
   });
 
-  const hasAnyOutput = Object.values(outputs).some(Boolean);
+  const hasAnyOutput = useMemo(() => Object.values(outputs).some(Boolean), [outputs]);
 
   // Map agent progress to percent
   const PROGRESS_MAP = {
@@ -297,7 +321,10 @@ export default function Home() {
     }
   };
 
-  const completedAgents = Object.values(agentStates).filter((a) => a.status === "done").length;
+  const completedAgents = useMemo(
+    () => Object.values(agentStates).filter((a) => a.status === "done").length,
+    [agentStates]
+  );
 
   return (
     <>
@@ -368,15 +395,17 @@ export default function Home() {
                 {/* Progress bar */}
                 {(isLoading || hasAnyOutput) && (
                   <>
-                    <div className="progress-bar-wrap mt-2">
+                    <div className="progress-bar-wrap mt-2" aria-hidden="true">
                       <div className="progress-bar-fill" style={{ width: `${progressPct}%` }} />
                     </div>
-                    <div className="progress-label">{statusMsg}</div>
+                    <div className="progress-label" aria-live="polite">
+                      {statusMsg}
+                    </div>
                   </>
                 )}
                 {/* Error banner */}
                 {errorMsg && (
-                  <div className="error-banner">
+                  <div className="error-banner" role="alert" aria-live="assertive">
                     ⚠️ {errorMsg}
                   </div>
                 )}
@@ -441,31 +470,42 @@ export default function Home() {
             ) : (
               <>
                 {/* Tabs */}
-                <nav className="tabs-bar">
-                  {TABS.map((t) => (
-                    <button
-                      key={t.key}
-                      className={`tab ${activeTab === t.key ? "active" : ""}`}
-                      onClick={() => setActiveTab(t.key)}
-                      disabled={!outputs[t.key]}
-                      role="tab"
-                      aria-selected={activeTab === t.key}
-                      aria-label={`${t.label}${outputs[t.key] ? "" : " (not available)"}`}
-                    >
-                      <span
-                        className="tab-dot"
-                        style={{ background: outputs[t.key] ? t.dot : "var(--muted)" }}
-                      />
-                      {t.emoji} {t.label}
-                    </button>
-                  ))}
+                <nav className="tabs-bar" role="tablist" aria-label="Output tabs">
+                  {TABS.map((t) => {
+                    const isActive = activeTab === t.key;
+                    const isDisabled = !outputs[t.key];
+                    const tabId = `tab-${t.key}`;
+                    const panelId = `panel-${t.key}`;
+                    return (
+                      <button
+                        key={t.key}
+                        id={tabId}
+                        className={`tab ${isActive ? "active" : ""}`}
+                        onClick={() => setActiveTab(t.key)}
+                        disabled={isDisabled}
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-controls={panelId}
+                        tabIndex={isActive ? 0 : -1}
+                        aria-label={`${t.label}${outputs[t.key] ? "" : " (not available)"}`}
+                      >
+                        <span
+                          className="tab-dot"
+                          style={{ background: outputs[t.key] ? t.dot : "var(--muted)" }}
+                        />
+                        {t.emoji} {t.label}
+                      </button>
+                    );
+                  })}
                 </nav>
 
                 {/* Active tab content */}
-                <div className="output-content">
+                <div className="output-content" role="tabpanel" id={`panel-${activeTab}`}>
                   {TABS.map((t) =>
                     activeTab === t.key && outputs[t.key] ? (
-                      <MarkdownOutput key={t.key} content={outputs[t.key]} label={t.label} />
+                      <div key={t.key}>
+                        <MarkdownOutput content={outputs[t.key]} label={t.label} />
+                      </div>
                     ) : null
                   )}
                 </div>
