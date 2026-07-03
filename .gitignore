@@ -7,3 +7,9 @@ out/
 .DS_Store
 
 .vercel
+.agents
+.kilocode
+.qwen
+DESIGN.md
+skills-lock.json
+AGENTS.md
