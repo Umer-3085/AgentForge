@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Head from "next/head";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -6,23 +6,23 @@ import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 // ─── Agent Config ─────────────────────────────────────────────────────────────
 const AGENT_CONFIG = {
-  CodeGen:   { emoji: "⚡", role: "Code Generator",            color: "#059669", cssVar: "var(--c-code)" },
-  Security:  { emoji: "🛡️", role: "Security Reviewer",         color: "#dc2626", cssVar: "var(--c-security)" },
-  Architect: { emoji: "📐", role: "Architecture Advisor",       color: "#3b82f6", cssVar: "var(--c-architect)" },
-  TestGen:   { emoji: "🧪", role: "QA Engineer",               color: "#f59e0b", cssVar: "var(--c-test)" },
-  DocWriter: { emoji: "📄", role: "Documentation Specialist",   color: "#a855f7", cssVar: "var(--c-doc)" },
+  CodeGen: { emoji: "⚡", role: "Code Generator", color: "#059669", cssVar: "var(--c-code)" },
+  Security: { emoji: "🛡️", role: "Security Reviewer", color: "#dc2626", cssVar: "var(--c-security)" },
+  Architect: { emoji: "📐", role: "Architecture Advisor", color: "#3b82f6", cssVar: "var(--c-architect)" },
+  TestGen: { emoji: "🧪", role: "QA Engineer", color: "#f59e0b", cssVar: "var(--c-test)" },
+  DocWriter: { emoji: "📄", role: "Documentation Specialist", color: "#a855f7", cssVar: "var(--c-doc)" },
 };
 
 const AGENT_ORDER = ["CodeGen", "Security", "Architect", "TestGen", "DocWriter"];
 
 // ─── Output Tab Config ────────────────────────────────────────────────────────
 const TABS = [
-  { key: "refinedCode",    label: "Refined Code",    emoji: "🚀", dot: "#10b981" },
-  { key: "securityReview", label: "Security",         emoji: "🛡️", dot: "#f43f5e" },
-  { key: "archReview",     label: "Architecture",     emoji: "📐", dot: "#3b82f6" },
-  { key: "tests",          label: "Tests",            emoji: "🧪", dot: "#f59e0b" },
-  { key: "docs",           label: "Docs",             emoji: "📄", dot: "#a855f7" },
-  { key: "initialCode",    label: "Initial Draft",    emoji: "✍️", dot: "#94a3b8" },
+  { key: "refinedCode", label: "Refined Code", emoji: "🚀", dot: "#10b981" },
+  { key: "securityReview", label: "Security", emoji: "🛡️", dot: "#f43f5e" },
+  { key: "archReview", label: "Architecture", emoji: "📐", dot: "#3b82f6" },
+  { key: "tests", label: "Tests", emoji: "🧪", dot: "#f59e0b" },
+  { key: "docs", label: "Docs", emoji: "📄", dot: "#a855f7" },
+  { key: "initialCode", label: "Initial Draft", emoji: "✍️", dot: "#94a3b8" },
 ];
 
 // ─── Quick Templates ──────────────────────────────────────────────────────────
@@ -50,20 +50,48 @@ const TEMPLATES = [
 ];
 
 // ─── Markdown + Syntax Highlight Renderer ────────────────────────────────────
-function MarkdownOutput({ content }) {
+function MarkdownOutput({ content, label }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // Fallback for environments where clipboard API is restricted
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = content;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+
+        if (ok) {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2200);
+        } else {
+          setCopied(false);
+        }
+      } catch {
+        setCopied(false);
+      }
+    }
   };
 
   return (
     <div>
       <div className="copy-bar">
-        <button className={`btn-copy ${copied ? "copied" : ""}`} onClick={handleCopy}>
-          {copied ? "✓ Copied!" : "⧉ Copy All"}
+        <button
+          className={`btn-copy ${copied ? "copied" : ""}`}
+          onClick={handleCopy}
+          aria-label={copied ? `Copied ${label} content` : `Copy ${label} content`}
+        >
+          {copied ? "✓ Copied" : "⧉ Copy"}
         </button>
       </div>
       <div className="md">
@@ -78,9 +106,9 @@ function MarkdownOutput({ content }) {
                   PreTag="div"
                   customStyle={{
                     borderRadius: "10px",
-                    border: "1px solid var(--border)",
+                    border: "1px solid var(--hairline)",
                     padding: "18px",
-                    background: "#f8f9fd",
+                    background: "var(--surface)",
                     fontSize: "0.84rem",
                     fontFamily: "'JetBrains Mono', monospace",
                     lineHeight: 1.6,
@@ -149,7 +177,7 @@ export default function Home() {
     refinedCode: "", tests: "", docs: "",
   });
 
-  const hasAnyOutput = Object.values(outputs).some(Boolean);
+  const hasAnyOutput = useMemo(() => Object.values(outputs).some(Boolean), [outputs]);
 
   // Map agent progress to percent
   const PROGRESS_MAP = {
@@ -215,7 +243,7 @@ export default function Home() {
             try {
               const data = JSON.parse(t.slice(5).trim());
               handleEvent(lastEvent, data, { codeGenCallCount, setCodeGenCallCount: (v) => { codeGenCallCount = v; } });
-            } catch {}
+            } catch { }
             lastEvent = null;
           }
         }
@@ -236,7 +264,7 @@ export default function Home() {
       setAgentStatus(agent, status, message);
 
       if (status === "thinking") setStatusMsg(message || `${agent} is working...`);
-      if (status === "done")     setStatusMsg(`${agent} completed.`);
+      if (status === "done") setStatusMsg(`${agent} completed.`);
 
       // Progress tracking
       if (agent === "CodeGen" && status === "thinking") {
@@ -245,13 +273,13 @@ export default function Home() {
         setCodeGenCallCount(codeGenCallCount + 1);
         setProgressPct(codeGenCallCount === 0 ? 20 : 75);
       } else if (agent === "Security" && status === "thinking") setProgressPct(30);
-      else if (agent === "Security" && status === "done")    setProgressPct(45);
+      else if (agent === "Security" && status === "done") setProgressPct(45);
       else if (agent === "Architect" && status === "thinking") setProgressPct(50);
-      else if (agent === "Architect" && status === "done")   setProgressPct(62);
-      else if (agent === "TestGen"  && status === "thinking") setProgressPct(78);
-      else if (agent === "TestGen"  && status === "done")    setProgressPct(88);
+      else if (agent === "Architect" && status === "done") setProgressPct(62);
+      else if (agent === "TestGen" && status === "thinking") setProgressPct(78);
+      else if (agent === "TestGen" && status === "done") setProgressPct(88);
       else if (agent === "DocWriter" && status === "thinking") setProgressPct(92);
-      else if (agent === "DocWriter" && status === "done")   setProgressPct(100);
+      else if (agent === "DocWriter" && status === "done") setProgressPct(100);
 
       // Store outputs as they arrive
       if (output && status === "done") {
@@ -293,7 +321,10 @@ export default function Home() {
     }
   };
 
-  const completedAgents = Object.values(agentStates).filter((a) => a.status === "done").length;
+  const completedAgents = useMemo(
+    () => Object.values(agentStates).filter((a) => a.status === "done").length,
+    [agentStates]
+  );
 
   return (
     <>
@@ -357,22 +388,24 @@ export default function Home() {
                   placeholder="e.g. Build a Node.js Express API with JWT auth, bcrypt password hashing, and rate limiting..."
                   disabled={isLoading}
                 />
-                <button id="generate-btn" type="submit" className="btn-primary" disabled={isLoading || !requirements.trim()}>
+                <button id="generate-btn" type="submit" className="btn-primary" disabled={isLoading || !requirements.trim()} aria-label={isLoading ? "Orchestrating agents" : "Launch agent network"}>
                   {isLoading ? <><span className="spinner" /> Orchestrating Agents...</> : "⚡ Launch Agent Network"}
                 </button>
 
                 {/* Progress bar */}
                 {(isLoading || hasAnyOutput) && (
                   <>
-                    <div className="progress-bar-wrap mt-2">
+                    <div className="progress-bar-wrap mt-2" aria-hidden="true">
                       <div className="progress-bar-fill" style={{ width: `${progressPct}%` }} />
                     </div>
-                    <div className="progress-label">{statusMsg}</div>
+                    <div className="progress-label" aria-live="polite">
+                      {statusMsg}
+                    </div>
                   </>
                 )}
                 {/* Error banner */}
                 {errorMsg && (
-                  <div className="error-banner">
+                  <div className="error-banner" role="alert" aria-live="assertive">
                     ⚠️ {errorMsg}
                   </div>
                 )}
@@ -384,7 +417,7 @@ export default function Home() {
                   <div className="divider" />
                   <div className="section-label" style={{ marginBottom: "10px" }}>Quick Templates</div>
                   {TEMPLATES.map((t, i) => (
-                    <button key={i} className="template-btn" onClick={() => setRequirements(t.text)}>
+                    <button key={i} className="template-btn" onClick={() => setRequirements(t.text)} aria-label={`Use template: ${t.title}`} title={t.text}>
                       <span className="template-icon">{t.icon}</span>
                       {t.title}
                     </button>
@@ -437,28 +470,42 @@ export default function Home() {
             ) : (
               <>
                 {/* Tabs */}
-                <nav className="tabs-bar">
-                  {TABS.map((t) => (
-                    <button
-                      key={t.key}
-                      className={`tab ${activeTab === t.key ? "active" : ""}`}
-                      onClick={() => setActiveTab(t.key)}
-                      disabled={!outputs[t.key]}
-                    >
-                      <span
-                        className="tab-dot"
-                        style={{ background: outputs[t.key] ? t.dot : "var(--text-3)" }}
-                      />
-                      {t.emoji} {t.label}
-                    </button>
-                  ))}
+                <nav className="tabs-bar" role="tablist" aria-label="Output tabs">
+                  {TABS.map((t) => {
+                    const isActive = activeTab === t.key;
+                    const isDisabled = !outputs[t.key];
+                    const tabId = `tab-${t.key}`;
+                    const panelId = `panel-${t.key}`;
+                    return (
+                      <button
+                        key={t.key}
+                        id={tabId}
+                        className={`tab ${isActive ? "active" : ""}`}
+                        onClick={() => setActiveTab(t.key)}
+                        disabled={isDisabled}
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-controls={panelId}
+                        tabIndex={isActive ? 0 : -1}
+                        aria-label={`${t.label}${outputs[t.key] ? "" : " (not available)"}`}
+                      >
+                        <span
+                          className="tab-dot"
+                          style={{ background: outputs[t.key] ? t.dot : "var(--muted)" }}
+                        />
+                        {t.emoji} {t.label}
+                      </button>
+                    );
+                  })}
                 </nav>
 
                 {/* Active tab content */}
-                <div className="output-content">
+                <div className="output-content" role="tabpanel" id={`panel-${activeTab}`}>
                   {TABS.map((t) =>
                     activeTab === t.key && outputs[t.key] ? (
-                      <MarkdownOutput key={t.key} content={outputs[t.key]} />
+                      <div key={t.key}>
+                        <MarkdownOutput content={outputs[t.key]} label={t.label} />
+                      </div>
                     ) : null
                   )}
                 </div>
