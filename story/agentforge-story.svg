@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" font-family="'Plus Jakarta Sans', -apple-system, sans-serif">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="gradYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd02f"/>
+      <stop offset="100%" stop-color="#fcb900"/>
+    </linearGradient>
+    <linearGradient id="gradPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1c1e"/>
+      <stop offset="100%" stop-color="#2c2c34"/>
+    </linearGradient>
+    <linearGradient id="gradBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f7f8fa"/>
+    </linearGradient>
+    <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4262ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadowCard" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#050038" flood-opacity="0.06"/>
+    </filter>
+    <filter id="shadowSm" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#050038" flood-opacity="0.04"/>
+    </filter>
+    <filter id="shadowLg" x="-6%" y="-6%" width="112%" height="118%">
+      <feDropShadow dx="0" dy="8" stdDeviation="24" flood-color="#050038" flood-opacity="0.08"/>
+    </filter>
+    <filter id="glowBlue">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowBlue" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-auto">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#4262ff"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-auto">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#a5a8b5"/>
+    </marker>
+    <marker id="arrowFeedback" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-auto">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#f59e0b"/>
+    </marker>
+
+    <!-- Agent avatar circles -->
+    <clipPath id="clipRocket"><rect x="568" y="10" width="64" height="64" rx="12"/></clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="1600" fill="url(#gradBg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#1c1c1e" stroke-width="0.5"/>
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#1c1c1e" stroke-width="0.5"/>
+    <line x1="0" y1="600" x2="1200" y2="600" stroke="#1c1c1e" stroke-width="0.5"/>
+    <line x1="0" y1="800" x2="1200" y2="800" stroke="#1c1c1e" stroke-width="0.5"/>
+    <line x1="0" y1="1000" x2="1200" y2="1000" stroke="#1c1c1e" stroke-width="0.5"/>
+    <line x1="0" y1="1200" x2="1200" y2="1200" stroke="#1c1c1e" stroke-width="0.5"/>
+    <line x1="0" y1="1400" x2="1200" y2="1400" stroke="#1c1c1e" stroke-width="0.5"/>
+  </g>
+
+  <!-- ===== TOP HERO SECTION ===== -->
+  <rect x="60" y="40" width="1080" height="200" rx="20" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+
+  <!-- Logo icon -->
+  <rect x="100" y="78" width="56" height="56" rx="12" fill="url(#gradYellow)"/>
+  <text x="128" y="114" font-size="28" text-anchor="middle" fill="#1c1c1e">⚡</text>
+
+  <!-- Title -->
+  <text x="176" y="106" font-size="32" font-weight="700" fill="#1c1c1e" letter-spacing="-0.03">AgentForge</text>
+  <text x="176" y="132" font-size="14" fill="#6b6f7e" font-weight="500">Multi-Agent Collaborative Code Review &amp; Synthesis System</text>
+
+  <!-- Badge -->
+  <rect x="176" y="144" width="182" height="26" rx="13" fill="#fff4c4" stroke="rgba(255,208,47,0.3)" stroke-width="1"/>
+  <text x="267" y="160" font-size="11" font-weight="700" fill="#746019" text-anchor="middle" letter-spacing="1">KAGGLE AI CAPSTONE 2026</text>
+
+  <!-- Description -->
+  <text x="100" y="208" font-size="13.5" fill="#555a6a" line-height="1.6">
+    <tspan x="100" dy="0">Five specialized AI agents collaborate autonomously to write, review, test, and document</tspan>
+    <tspan x="100" dy="20">code — all streamed live to a polished dark-themed dashboard.</tspan>
+  </text>
+
+  <!-- Stats row -->
+  <g transform="translate(920, 85)">
+    <rect x="0" y="0" width="180" height="115" rx="12" fill="#f7f8fa" stroke="#eef0f3" stroke-width="1"/>
+    <text x="90" y="30" font-size="26" font-weight="700" fill="#1c1c1e" text-anchor="middle">5</text>
+    <text x="90" y="46" font-size="11" fill="#6b6f7e" text-anchor="middle" font-weight="500">Specialized Agents</text>
+    <line x1="20" y1="58" x2="160" y2="58" stroke="#e0e2e8" stroke-width="1"/>
+    <text x="90" y="76" font-size="26" font-weight="700" fill="#1c1c1e" text-anchor="middle">⚡</text>
+    <text x="90" y="92" font-size="11" fill="#6b6f7e" text-anchor="middle" font-weight="500">Real-time SSE Streaming</text>
+  </g>
+
+  <!-- ===== SECTION 1: AGENT PIPELINE ===== -->
+  <text x="100" y="300" font-size="11" font-weight="700" fill="#8e91a0" letter-spacing="3" text-transform="uppercase">THE PIPELINE</text>
+  <text x="100" y="320" font-size="20" font-weight="700" fill="#1c1c1e" letter-spacing="-0.02">Five Agents, One Orchestrated Flow</text>
+
+  <!-- Pipeline flow arrow -->
+  <line x1="280" y1="420" x2="920" y2="420" stroke="#4262ff" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowBlue)" opacity="0.5"/>
+
+  <!-- Agent Cards -->
+  <!-- 1. CodeGen -->
+  <g transform="translate(100, 360)">
+    <rect x="0" y="0" width="190" height="130" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="130" rx="2" fill="#059669"/>
+    <rect x="18" y="16" width="36" height="36" rx="8" fill="#ecfdf5"/>
+    <text x="36" y="39" font-size="18" text-anchor="middle">⚡</text>
+    <text x="64" y="30" font-size="14" font-weight="600" fill="#1c1c1e">CodeGen</text>
+    <text x="64" y="46" font-size="11" fill="#6b6f7e">Code Generator</text>
+    <text x="18" y="72" font-size="11" fill="#555a6a">Writes initial implementation,</text>
+    <text x="18" y="86" font-size="11" fill="#555a6a">then refines via critique</text>
+    <text x="18" y="100" font-size="11" fill="#555a6a">feedback loop.</text>
+    <rect x="18" y="112" width="50" height="10" rx="5" fill="#a7f3d0" opacity="0.5"/>
+  </g>
+
+  <!-- Arrow 1→2 -->
+  <path d="M290 425 L340 425" stroke="#a5a8b5" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- 2. Security -->
+  <g transform="translate(350, 360)">
+    <rect x="0" y="0" width="190" height="130" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="130" rx="2" fill="#dc2626"/>
+    <rect x="18" y="16" width="36" height="36" rx="8" fill="#fef2f2"/>
+    <text x="36" y="39" font-size="18" text-anchor="middle">🛡️</text>
+    <text x="64" y="30" font-size="14" font-weight="600" fill="#1c1c1e">Security</text>
+    <text x="64" y="46" font-size="11" fill="#6b6f7e">Security Reviewer</text>
+    <text x="18" y="72" font-size="11" fill="#555a6a">OWASP-based vulnerability</text>
+    <text x="18" y="86" font-size="11" fill="#555a6a">analysis with severity</text>
+    <text x="18" y="100" font-size="11" fill="#555a6a">grading (CRITICAL→LOW).</text>
+    <rect x="18" y="112" width="50" height="10" rx="5" fill="#fecaca" opacity="0.5"/>
+  </g>
+
+  <!-- Arrow 2→3 -->
+  <path d="M540 425 L590 425" stroke="#a5a8b5" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- 3. Architect -->
+  <g transform="translate(600, 360)">
+    <rect x="0" y="0" width="190" height="130" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="130" rx="2" fill="#4262ff"/>
+    <rect x="18" y="16" width="36" height="36" rx="8" fill="#eef2ff"/>
+    <text x="36" y="39" font-size="18" text-anchor="middle">📐</text>
+    <text x="64" y="30" font-size="14" font-weight="600" fill="#1c1c1e">Architect</text>
+    <text x="64" y="46" font-size="11" fill="#6b6f7e">Architecture Advisor</text>
+    <text x="18" y="72" font-size="11" fill="#555a6a">Design patterns, scalability,</text>
+    <text x="18" y="86" font-size="11" fill="#555a6a">maintainability, and</text>
+    <text x="18" y="100" font-size="11" fill="#555a6a">structural reviews.</text>
+    <rect x="18" y="112" width="50" height="10" rx="5" fill="#c7d2fe" opacity="0.5"/>
+  </g>
+
+  <!-- Arrow 3→4 -->
+  <path d="M790 425 L840 425" stroke="#a5a8b5" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- 4. TestGen -->
+  <g transform="translate(850, 360)">
+    <rect x="0" y="0" width="190" height="130" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="130" rx="2" fill="#d97706"/>
+    <rect x="18" y="16" width="36" height="36" rx="8" fill="#fffbeb"/>
+    <text x="36" y="39" font-size="18" text-anchor="middle">🧪</text>
+    <text x="64" y="30" font-size="14" font-weight="600" fill="#1c1c1e">TestGen</text>
+    <text x="64" y="46" font-size="11" fill="#6b6f7e">QA Engineer</text>
+    <text x="18" y="72" font-size="11" fill="#555a6a">Unit + integration tests</text>
+    <text x="18" y="86" font-size="11" fill="#555a6a">following the AAA</text>
+    <text x="18" y="100" font-size="11" fill="#555a6a">(Arrange-Act-Assert) pattern.</text>
+    <rect x="18" y="112" width="50" height="10" rx="5" fill="#fde68a" opacity="0.5"/>
+  </g>
+
+  <!-- ===== CRITIQUE & REFINE LOOP SECTION ===== -->
+  <rect x="100" y="530" width="1000" height="160" rx="16" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+
+  <rect x="124" y="548" width="30" height="30" rx="8" fill="#fef3c7"/>
+  <text x="139" y="568" font-size="16" text-anchor="middle">🔄</text>
+  <text x="166" y="567" font-size="15" font-weight="600" fill="#1c1c1e">Critique &amp; Refinement Loop</text>
+  <text x="166" y="583" font-size="12" fill="#6b6f7e">After Security and Architect review, CodeGen refines the code based on their feedback</text>
+
+  <!-- Loop diagram -->
+  <!-- Feedback arrows forming a triangle -->
+  <path d="M420 620 L600 620" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowFeedback)"/>
+  <path d="M600 620 L780 620" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowFeedback)"/>
+  <path d="M780 595 Q780 555 600 555 Q420 555 420 595" stroke="#d97706" stroke-width="2" stroke-dasharray="5,3" fill="none" marker-end="url(#arrowFeedback)"/>
+
+  <!-- Step boxes -->
+  <g transform="translate(360, 635)">
+    <rect x="0" y="-18" width="100" height="36" rx="18" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/>
+    <text x="50" y="6" font-size="11" font-weight="600" fill="#059669" text-anchor="middle">1️. CodeGen Writes</text>
+  </g>
+  <g transform="translate(540, 635)">
+    <rect x="0" y="-18" width="110" height="36" rx="18" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/>
+    <text x="55" y="6" font-size="11" font-weight="600" fill="#dc2626" text-anchor="middle">2️. Security Reviews</text>
+  </g>
+  <g transform="translate(730, 635)">
+    <rect x="0" y="-18" width="115" height="36" rx="18" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/>
+    <text x="57.5" y="6" font-size="11" font-weight="600" fill="#4262ff" text-anchor="middle">3️. Architect Reviews</text>
+  </g>
+  <g transform="translate(420, 668)">
+    <rect x="0" y="-18" width="130" height="36" rx="18" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/>
+    <text x="65" y="6" font-size="11" font-weight="600" fill="#d97706" text-anchor="middle">4️. CodeGen Refines ✨</text>
+  </g>
+
+  <!-- ===== SECTION 2: MCP SERVER ===== -->
+  <text x="100" y="750" font-size="11" font-weight="700" fill="#8e91a0" letter-spacing="3" text-transform="uppercase">INFRASTRUCTURE</text>
+  <text x="100" y="770" font-size="20" font-weight="700" fill="#1c1c1e" letter-spacing="-0.02">MCP Server &amp; Static Analysis</text>
+
+  <g transform="translate(100, 800)">
+    <!-- MCP Server card -->
+    <rect x="0" y="0" width="460" height="150" rx="14" fill="#1c1c1e" filter="url(#shadowLg)"/>
+    <rect x="20" y="18" width="32" height="32" rx="8" fill="#2c2c34"/>
+    <text x="36" y="39" font-size="16" text-anchor="middle">🔌</text>
+    <text x="64" y="34" font-size="14" font-weight="600" fill="#ffffff">MCP Server</text>
+    <text x="64" y="50" font-size="11" fill="#a5a8b5">Model Context Protocol · stdio-based · JSON-RPC 2.0</text>
+
+    <rect x="20" y="68" width="420" height="32" rx="8" fill="#2c2c34"/>
+    <text x="36" y="89" font-size="12" fill="#a5a8b5" font-family="'JetBrains Mono', monospace">$ node mcp_server.js</text>
+
+    <text x="20" y="122" font-size="12" font-weight="600" fill="#ffffff">Exposes tool:</text>
+    <rect x="100" y="108" width="145" height="22" rx="6" fill="#4262ff" opacity="0.2"/>
+    <text x="108" y="123" font-size="11" fill="#809aff" font-family="'JetBrains Mono', monospace">check_code_quality</text>
+  </g>
+
+  <!-- What it checks panel -->
+  <g transform="translate(590, 800)">
+    <rect x="0" y="0" width="510" height="150" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <text x="24" y="26" font-size="11" font-weight="600" fill="#8e91a0" letter-spacing="1">STATIC ANALYSIS CHECKS</text>
+
+    <g transform="translate(24, 44)">
+      <rect x="0" y="0" width="220" height="28" rx="8" fill="#f7f8fa" stroke="#eef0f3" stroke-width="1"/>
+      <text x="12" y="19" font-size="12" font-family="'JetBrains Mono', monospace" fill="#dc2626">eval()</text>
+      <text x="80" y="19" font-size="11" fill="#555a6a">detection</text>
+    </g>
+    <g transform="translate(260, 44)">
+      <rect x="0" y="0" width="220" height="28" rx="8" fill="#f7f8fa" stroke="#eef0f3" stroke-width="1"/>
+      <text x="12" y="19" font-size="12" font-family="'JetBrains Mono', monospace" fill="#dc2626">API_KEY</text>
+      <text x="80" y="19" font-size="11" fill="#555a6a">hardcoded secrets</text>
+    </g>
+    <g transform="translate(24, 80)">
+      <rect x="0" y="0" width="220" height="28" rx="8" fill="#f7f8fa" stroke="#eef0f3" stroke-width="1"/>
+      <text x="12" y="19" font-size="12" fill="#dc2626">SQL Injection</text>
+      <text x="115" y="19" font-size="11" fill="#555a6a">pattern scan</text>
+    </g>
+    <g transform="translate(260, 80)">
+      <rect x="0" y="0" width="220" height="28" rx="8" fill="#f7f8fa" stroke="#eef0f3" stroke-width="1"/>
+      <text x="12" y="19" font-size="12" fill="#dc2626">Line Length</text>
+      <text x="100" y="19" font-size="11" fill="#555a6a">>100 chars</text>
+    </g>
+  </g>
+
+  <!-- ===== SECTION 3: OUTPUTS ===== -->
+  <text x="100" y="1010" font-size="11" font-weight="700" fill="#8e91a0" letter-spacing="3" text-transform="uppercase">OUTPUTS</text>
+  <text x="100" y="1030" font-size="20" font-weight="700" fill="#1c1c1e" letter-spacing="-0.02">Everything Streamed Live via SSE</text>
+
+  <!-- Output categories -->
+  <g transform="translate(100, 1060)">
+    <!-- Refined Code -->
+    <rect x="0" y="0" width="320" height="80" rx="12" fill="#ffffff" filter="url(#shadowSm)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="80" rx="2" fill="#059669"/>
+    <text x="20" y="28" font-size="13" font-weight="600" fill="#1c1c1e">Refined Code</text>
+    <text x="20" y="46" font-size="11" fill="#555a6a">Post-critique final implementation</text>
+    <text x="20" y="60" font-size="11" fill="#555a6a">with Security + Architect feedback applied</text>
+
+    <!-- Security Review -->
+    <rect x="340" y="0" width="320" height="80" rx="12" fill="#ffffff" filter="url(#shadowSm)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="80" rx="2" fill="#dc2626"/>
+    <text x="360" y="28" font-size="13" font-weight="600" fill="#1c1c1e">Security Audit</text>
+    <text x="360" y="46" font-size="11" fill="#555a6a">OWASP Top 10 analysis with</text>
+    <text x="360" y="60" font-size="11" fill="#555a6a">CRITICAL / HIGH / MEDIUM / LOW ratings</text>
+
+    <!-- Architecture -->
+    <rect x="680" y="0" width="320" height="80" rx="12" fill="#ffffff" filter="url(#shadowSm)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="80" rx="2" fill="#4262ff"/>
+    <text x="700" y="28" font-size="13" font-weight="600" fill="#1c1c1e">Architecture Review</text>
+    <text x="700" y="46" font-size="11" fill="#555a6a">Scalability, design patterns,</text>
+    <text x="700" y="60" font-size="11" fill="#555a6a">maintainability recommendations</text>
+  </g>
+
+  <g transform="translate(100, 1155)">
+    <!-- Tests -->
+    <rect x="0" y="0" width="320" height="80" rx="12" fill="#ffffff" filter="url(#shadowSm)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="80" rx="2" fill="#d97706"/>
+    <text x="20" y="28" font-size="13" font-weight="600" fill="#1c1c1e">Tests</text>
+    <text x="20" y="46" font-size="11" fill="#555a6a">Unit + integration tests</text>
+    <text x="20" y="60" font-size="11" fill="#555a6a">following AAA pattern</text>
+
+    <!-- Documentation -->
+    <rect x="340" y="0" width="320" height="80" rx="12" fill="#ffffff" filter="url(#shadowSm)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="80" rx="2" fill="#7c3aed"/>
+    <text x="360" y="28" font-size="13" font-weight="600" fill="#1c1c1e">Documentation</text>
+    <text x="360" y="46" font-size="11" fill="#555a6a">README, API reference,</text>
+    <text x="360" y="60" font-size="11" fill="#555a6a">usage examples</text>
+
+    <!-- Initial Draft -->
+    <rect x="680" y="0" width="320" height="80" rx="12" fill="#ffffff" filter="url(#shadowSm)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="80" rx="2" fill="#a5a8b5"/>
+    <text x="700" y="28" font-size="13" font-weight="600" fill="#1c1c1e">Initial Draft</text>
+    <text x="700" y="46" font-size="11" fill="#555a6a">Original code before</text>
+    <text x="700" y="60" font-size="11" fill="#555a6a">critique refinement</text>
+  </g>
+
+  <!-- ===== SECTION 4: TECH STACK ===== -->
+  <text x="100" y="1300" font-size="11" font-weight="700" fill="#8e91a0" letter-spacing="3" text-transform="uppercase">TECH STACK</text>
+  <text x="100" y="1320" font-size="20" font-weight="700" fill="#1c1c1e" letter-spacing="-0.02">Built with Modern Tools</text>
+
+  <g transform="translate(100, 1350)">
+    <!-- Frontend -->
+    <rect x="0" y="0" width="310" height="100" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="100" rx="2" fill="#4262ff"/>
+    <text x="20" y="26" font-size="13" font-weight="600" fill="#1c1c1e">Frontend</text>
+    <g transform="translate(20, 38)">
+      <rect x="0" y="0" width="58" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="29" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">Next.js</text>
+      <rect x="66" y="0" width="52" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="92" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">React</text>
+      <rect x="126" y="0" width="72" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="162" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">CSS Tokens</text>
+    </g>
+    <text x="20" y="80" font-size="11" fill="#555a6a">SSR/SSG · Miro design system · responsive</text>
+
+    <!-- AI -->
+    <rect x="330" y="0" width="310" height="100" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="100" rx="2" fill="#059669"/>
+    <text x="350" y="26" font-size="13" font-weight="600" fill="#1c1c1e">AI / LLM</text>
+    <g transform="translate(350, 38)">
+      <rect x="0" y="0" width="68" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="34" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">Gemini</text>
+      <rect x="76" y="0" width="48" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="100" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">Groq</text>
+      <rect x="132" y="0" width="94" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="179" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">Auto-fallback</text>
+    </g>
+    <text x="350" y="80" font-size="11" fill="#555a6a">Gemini 2.0 Flash · Llama 3.3–70B · Retry logic</text>
+
+    <!-- Infrastructure -->
+    <rect x="660" y="0" width="340" height="100" rx="14" fill="#ffffff" filter="url(#shadowCard)" stroke="#eef0f3" stroke-width="1"/>
+    <rect x="0" y="0" width="3" height="100" rx="2" fill="#d97706"/>
+    <text x="680" y="26" font-size="13" font-weight="600" fill="#1c1c1e">Infrastructure</text>
+    <g transform="translate(680, 38)">
+      <rect x="0" y="0" width="58" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="29" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">Vercel</text>
+      <rect x="66" y="0" width="140" height="22" rx="6" fill="#f7f8fa" stroke="#e0e2e8" stroke-width="1"/><text x="136" y="15" font-size="10" font-weight="600" fill="#555a6a" text-anchor="middle">X-Accel-Buffering: no</text>
+    </g>
+    <text x="680" y="80" font-size="11" fill="#555a6a">SSE-optimized deployment · edge proxy support</text>
+  </g>
+
+  <!-- ===== FOOTER ===== -->
+  <line x1="100" y1="1490" x2="1100" y2="1490" stroke="#e0e2e8" stroke-width="1"/>
+
+  <g transform="translate(100, 1510)">
+    <rect x="0" y="0" width="28" height="28" rx="6" fill="url(#gradYellow)"/>
+    <text x="14" y="19" font-size="14" text-anchor="middle" fill="#1c1c1e">⚡</text>
+    <text x="38" y="19" font-size="13" font-weight="600" fill="#1c1c1e">AgentForge</text>
+  </g>
+
+  <text x="600" y="1530" font-size="11" fill="#a5a8b5" text-anchor="middle">Multi-Agent Collaborative Code Review &amp; Synthesis System · Kaggle AI Agents Capstone 2026</text>
+  <text x="600" y="1548" font-size="11" fill="#a5a8b5" text-anchor="middle">Built with Next.js · Gemini · Groq · MCP · SSE Streaming · Miro Design System</text>
+</svg>
