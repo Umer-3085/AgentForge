@@ -6,6 +6,7 @@ out/
 *.log
 .DS_Store
 
+.env
 .vercel
 .agents
 .kilocode
